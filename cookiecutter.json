@@ -1,0 +1,18 @@
+{
+  "full_name": "Altus-Five Inc.",
+  "email": "info@altus5.com",
+  "github_name": "altus5",
+  "project_slug": "example-project",
+  "module_name": "{{ cookiecutter.project_slug|lower|replace('-', '_') }}",
+  "short_description": "A simple application",
+  "version": "0.0.1",
+  "license": [
+    "MIT",
+    "BSD-3-Clause",
+    "GPL-3.0-or-later",
+    "Proprietary"
+  ],
+  "s3_test_bucket_name": "test-bucket",
+  "s3_test_data_path": "testdata",
+  "s3_glue_root_path": "glue"
+}

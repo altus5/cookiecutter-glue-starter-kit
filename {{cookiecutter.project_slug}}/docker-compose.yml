@@ -1,0 +1,67 @@
+version: '3'
+
+volumes:
+  local_localstack_data: {}
+
+networks:
+  glue_network:
+    name: glue_network
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    image: {{ cookiecutter.project_slug }}-app
+    container_name: {{ cookiecutter.project_slug }}-app
+    volumes:
+      - .:/app:z
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - ./.envs/.app
+      - ./.envs/.aws
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    networks:
+      - glue_network
+
+  glue:
+    image: amazon/aws-glue-libs:glue_libs_3.0.0_image_01
+    container_name: glue
+    working_dir: /app
+    volumes:
+      - .:/app:z
+    environment:
+      - DISABLE_SSL=true
+    env_file:
+      - ./.envs/.aws
+    ports:
+      - "4040:4040"
+      - "8888:8888"
+      - "18080:18080"
+    # 起動コマンド
+    ## jupyter を起動する場合
+    # command: /home/glue_user/jupyter/jupyter_start.sh
+    ## sh を起動する場合
+    ## jupyter がリソース消費しないようにコンテナを起動するには
+    ## entrypoint を無効にして sh でループする
+    entrypoint: []
+    command: /usr/bin/sh -c "while sleep 1000; do :; done"
+    networks:
+      - glue_network
+
+  localstack:
+    image: localstack/localstack:0.12.16
+    container_name: localstack
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+    env_file:
+      - ./.envs/.aws
+    ports:
+      - "4566:4566"
+      - "4571:4571"
+    volumes:
+      - .:/app:z
+      - ./docker/localstack/docker-entrypoint-initaws.d:/docker-entrypoint-initaws.d
+    networks:
+      - glue_network

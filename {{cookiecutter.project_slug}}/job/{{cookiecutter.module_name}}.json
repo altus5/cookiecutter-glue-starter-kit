@@ -1,0 +1,25 @@
+{
+    "Name": "{{ cookiecutter.module_name }}",
+    "Description": "",
+    "LogUri": "",
+    "Role": "GlueS3Role",
+    "ExecutionProperty": {
+        "MaxConcurrentRuns": 1
+    },
+    "Command": {
+        "Name": "glueetl",
+        "ScriptLocation": "s3://{{ cookiecutter.s3_test_bucket_name }}/{{ cookiecutter.s3_glue_root_path }}/scripts/app.py",
+        "PythonVersion": "3"
+    },
+    "DefaultArguments": {
+        "--TempDir": "s3://{{ cookiecutter.s3_test_bucket_name }}/{{ cookiecutter.s3_glue_root_path }}/tmp",
+        "--extra-py-files": "s3://{{ cookiecutter.s3_test_bucket_name }}/{{ cookiecutter.s3_glue_root_path }}/scripts/lib.zip",
+        "--job-bookmark-option": "job-bookmark-disable",
+        "--job-language": "python",
+        "--enable-spark-ui": "true",
+        "--spark-event-logs-path": "s3://{{ cookiecutter.s3_test_bucket_name }}/{{ cookiecutter.s3_glue_root_path }}/logs"
+    },
+    "Timeout": 2880,
+    "MaxCapacity": 5.0,
+    "GlueVersion": "3.0"
+}
