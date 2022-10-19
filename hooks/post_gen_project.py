@@ -40,4 +40,4 @@ if __name__ == "__main__":
         default_config = {
             "default_context": config,
         }
-        yaml.dump(default_config, f)
+        yaml.dump(default_config, f, encoding='utf-8', allow_unicode=True)
