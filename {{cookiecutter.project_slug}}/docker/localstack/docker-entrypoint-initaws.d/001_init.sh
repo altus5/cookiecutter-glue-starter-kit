@@ -8,4 +8,4 @@ awslocal s3 mb $S3_URL
 
 # テストファイルを配置
 DATA_DIR=/app/fixtures/data/it
-awslocal s3 cp --recursive $DATA_DIR/ $S3_URL/{{ cookiecutter.testdata }}/
+awslocal s3 cp --recursive $DATA_DIR/ $S3_URL/{{ cookiecutter.s3_test_data_path }}/
