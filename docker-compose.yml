@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
-    image: cookiecutter_cli_poetry_local
-    container_name: cookiecutter_cli_poetry_local
+    image: cookiecutter_glue_starter_kit_local
+    container_name: cookiecutter_glue_starter_kit_local
     volumes:
       - .:/app:z
     command: /bin/sh -c "while sleep 1000; do :; done"
