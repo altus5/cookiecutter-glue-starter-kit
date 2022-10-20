@@ -53,6 +53,7 @@ profile = "black"
 
 [tool.black]
 target-version = ['py37']
+line-length = 88
 
 [tool.pytest.ini_options]
 # Example
